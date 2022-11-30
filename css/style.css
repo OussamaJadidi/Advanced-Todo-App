@@ -1,0 +1,209 @@
+:root{
+    /* Light Theme colors(LT) */
+    --LT-veryLightGray: hsl(0, 0%, 98%);
+    --LT-veryLightGrayish: hsl(236, 33%, 92%);
+    --LT-lightGraishBlue: hsl(233, 11%, 84%);
+    --LT-darkGraishBlue: hsl(236, 9%, 61%);
+    --LT-veryDarkGraishBlue: hsl(235, 19%, 35%);
+
+    /* Dark Theme colors (DT) */
+    --DT-veryDarkBlue: hsl(235, 21%, 11%);
+    --DT-vertDarDesaturatedBlue: hsl(235, 24%, 19%);
+    --DT-lightGrayishBlue: hsl(234, 39%, 85%);
+    --DT-lightGrayishBlue-Hover: hsl(236, 33%, 92%);
+    --DT-darkGrayishBlue: hsl(234, 11%, 52%);
+    --DT-veryDarkGrayishBlue:hsl(233, 14%, 35%);
+    --DT-veryHardDarkGrayishBlue: hsl(237, 14%, 26%);
+
+    /* Primary colors  */
+    --c-brightBlue: hsl(220, 98%, 61%);
+    --bc-background: linear-gradient(hsl(192, 100%, 67%),hsl(280, 87%, 65%));
+
+    /* Font weight  */
+    --fw-400: 400;
+    --fw-700: 700;
+}
+
+/* ----------we will use CUBE metholodogie in this project----------*/
+
+/* Start utility classes */
+.fw-400{
+    font-weight: var(--fw-400);
+}
+.fw-700{
+    font-weight: var(--fw-700);
+}
+/* End utility  classes*/
+/* Start compositions */
+.container{
+    max-width: 35rem;
+    margin-inline: auto;
+    margin-block: 4rem;
+    padding-inline: 1.5rem;
+}
+
+.flex-space-between{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+}
+.flex-justify-content-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+/* End compositions  */
+/* Start block  */
+    /* Start general  */
+    body{
+        font-size: 18px;
+        font-family: 'Josefin Sans', sans-serif;
+        box-sizing: border-box;
+        font-weight: var(--fw-400);
+
+        background-image: url("../images/bg-desktop-light.jpg");
+        background-repeat: no-repeat;
+        background-size: 100vw 40vh;
+    }
+    button{
+        background-color: transparent;
+        padding-block: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        cursor: pointer;
+        display: inline-flex;
+
+    }
+    /* End general */
+    /* Start header */
+    .header{
+        min-height: 20vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;  
+        margin-bottom: 2rem;
+    }
+    .header__label{
+        color: white;
+        margin: 0;
+    }
+    .header__light-dark-modeButton{
+        width: 2rem;
+        height: 2rem;
+    }
+    .createNewTask{
+        border-radius: .4rem;
+    }
+    .createNewTask .task-container{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    input::placeholder{
+        color: var(--LT-darkGraishBlue)
+    }
+    input{
+        background-color: transparent;
+        outline: none;
+        width: 100%;
+        color: var(--LT-veryDarkGraishBlue);
+        caret-color: var(--c-brightBlue);
+    }
+    /* End header */
+
+/* Start Template id="ToDoList__task" */
+.ToDoList__task{
+    background-color: var(--LT-veryLightGray);
+    height: 3rem;
+    max-width: 100%;
+}
+.task-container{
+    max-width: 100%;
+    min-height: 100%;
+    padding-inline: 1.4rem;
+}
+:not(.ToDoList__management-bar).task-container{
+    border-bottom: 1px solid var(--LT-lightGraishBlue);
+}
+.ToDoList__task__check{ 
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 999999px;
+    border: 1px solid gray;
+    margin-right: 1.4rem;
+    background-color: white;
+}
+:not(.notActive).ToDoList__task__check:active{
+    border: 1px solid transparent;
+    background: 
+        linear-gradient(white,white) padding-box,
+        url("../images/bg-desktop-light.jpg") border-box;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.ToDoList__task__check--clicked{
+    border: none;
+    background: url("../images/icon-check.svg"),var(--bc-background);
+    background-position: 60% 50%;
+    background-repeat: no-repeat;
+}
+.ToDoList__task__text{
+    color: var(--LT-veryDarkGraishBlue);
+    cursor: pointer;
+}
+
+.ToDoList__task__deleteButton{
+    width: .8rem;
+    height: .8rem;
+}
+.ToDoList__management-bar{
+    font-size: .75em;
+}
+.ToDoList__management-bar *{
+    color: var(--LT-darkGraishBlue);
+}
+.ToDoList__management-bar button:active{
+    color: var(--LT-veryDarkGraishBlue);
+}
+@media(hover: hover){
+    .ToDoList__management-bar button:hover{
+        color: var(--LT-veryDarkGraishBlue);
+    }
+}
+@media(max-width: 40em){
+    .All-Active-Completed.pcVersion{
+        display: none;
+    }
+}
+.All-Active-Completed :nth-child(1){
+    color: var(--c-brightBlue);
+}
+/* End Template id="ToDoList__task" */
+.main{
+    border-radius: .5rem;
+    overflow: hidden;
+    box-shadow: 0 0 4rem .5rem rgba(0,0,0,.1);
+}
+/* Start footer */
+.footer{
+    text-align: center;
+    font-size: .75em;
+    color: var(--DT-lightGrayishBlue);
+    padding-block: 2.5rem;
+}
+@media(min-width: 40em){
+    .ToDoList__management-bar.phoneVersion{
+        display: none;
+    }
+}
+/* End footer */
+/* End block  */
+
+/* Start Todo list task  */
+/* End Todo list task  */
