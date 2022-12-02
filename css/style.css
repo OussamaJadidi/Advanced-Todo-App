@@ -103,8 +103,10 @@
     }
     .createNewTask .task-container{
         display: flex;
-        justify-content: flex-start;
         align-items: center;
+    }
+    .createNewTask__addTask{
+        padding-right: 1rem
     }
     input::placeholder{
         color: var(--LT-darkGraishBlue)
@@ -196,6 +198,10 @@
 }
 .All-Active-Completed :nth-child(1){
     color: var(--c-brightBlue);
+}
+.completed{
+    text-decoration: line-through;
+    color: var(--LT-lightGraishBlue)
 }
 /* End Template id="ToDoList__task" */
 .main{

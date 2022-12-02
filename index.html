@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/normalize.css">
     <!-- JavaScript links  -->
+    <script src="https://kit.fontawesome.com/c6da55cc0b.js" crossorigin="anonymous"></script>
     <script src="./javascript/main.js" defer></script>
   
   </head>
@@ -28,10 +29,15 @@
           <h1 class="header__label | fw-700">T O D O</h1>
           <button class="header__light-dark-modeButton"><img src="./images/icon-moon.svg" alt="dark-mode button"></button>
         </section>
-        <section class="createNewTask ToDoList__task">
-          <div class="task-container">
-            <span class="ToDoList__task__check notActive"></span>
-            <input type="text" placeholder="Create a new todo...">
+        <section class="createNewTask ToDoList__task flex-space-between">
+          <div class="task-container ">
+              <span class="ToDoList__task__check notActive" style=""></span>
+              <input type="text" placeholder="Create a new todo...">  
+          </div>
+          <div>
+            <button class="createNewTask__addTask">
+              <i class="fa-regular fa-paper-plane"></i>
+            </button>
           </div>
         </section>
       </header>
@@ -58,7 +64,7 @@
           <div class="task-container | flex-space-between">
               <span class="ToDoList__task__check-text | flex-space-between">
                 <button class="ToDoList__task__check | ToDoList__task__check--clicked"></button>
-                <span class="ToDoList__task__text">A Todo list task to finish</span> 
+                <span class="ToDoList__task__text completed">A Todo list task to finish</span> 
               </span>
               <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
@@ -66,7 +72,7 @@
           <div class="task-container | flex-space-between">
               <span class="ToDoList__task__check-text | flex-space-between">
                 <button class="ToDoList__task__check | ToDoList__task__check--clicked"></button>
-                <span class="ToDoList__task__text">A Todo list task to finish</span> 
+                <span class="ToDoList__task__text">A Todo list task to finishA TodoA Todo list task to finishA TodoA Todo list task to finishA Todo</span> 
               </span>
               <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
