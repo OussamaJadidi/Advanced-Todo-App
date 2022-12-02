@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/normalize.css">
     <!-- JavaScript links  -->
-    <script src="./javascript/main.js"></script>
+    <script src="./javascript/main.js" defer></script>
   
   </head>
   <body>
@@ -44,7 +44,7 @@
                 <button class="ToDoList__task__check | ToDoList__task__check--clicked"></button>
                 <span class="ToDoList__task__text">A Todo list task to finish</span> 
               </span>
-              <button><img src="./images/icon-cross.svg" alt="close button" class="ToDoList__task__deleteButton"></button>
+              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
         </section><section class="ToDoList__task">
           <div class="task-container | flex-space-between">
@@ -52,7 +52,7 @@
                 <button class="ToDoList__task__check | ToDoList__task__check--clicked"></button>
                 <span class="ToDoList__task__text">A Todo list task to finish</span> 
               </span>
-              <button><img src="./images/icon-cross.svg" alt="close button" class="ToDoList__task__deleteButton"></button>
+              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
         </section><section class="ToDoList__task">
           <div class="task-container | flex-space-between">
@@ -60,7 +60,7 @@
                 <button class="ToDoList__task__check | ToDoList__task__check--clicked"></button>
                 <span class="ToDoList__task__text">A Todo list task to finish</span> 
               </span>
-              <button><img src="./images/icon-cross.svg" alt="close button" class="ToDoList__task__deleteButton"></button>
+              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
         </section><section class="ToDoList__task">
           <div class="task-container | flex-space-between">
@@ -68,7 +68,7 @@
                 <button class="ToDoList__task__check | ToDoList__task__check--clicked"></button>
                 <span class="ToDoList__task__text">A Todo list task to finish</span> 
               </span>
-              <button><img src="./images/icon-cross.svg" alt="close button" class="ToDoList__task__deleteButton"></button>
+              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
         </section><section class="ToDoList__task">
           <div class="task-container | flex-space-between">
@@ -76,12 +76,20 @@
                 <button class="ToDoList__task__check | ToDoList__task__check--clicked"></button>
                 <span class="ToDoList__task__text">A Todo list task to finish</span> 
               </span>
-              <button><img src="./images/icon-cross.svg" alt="close button" class="ToDoList__task__deleteButton"></button>
+              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
+            </div>
+        </section><section class="ToDoList__task">
+          <div class="task-container | flex-space-between">
+              <span class="ToDoList__task__check-text | flex-space-between">
+                <button class="ToDoList__task__check | ToDoList__task__check--clicked"></button>
+                <span class="ToDoList__task__text">A Todo list task to finish</span> 
+              </span>
+              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
         </section>
         <section class="ToDoList__management-bar | ToDoList__task task-container | flex-space-between">
           <span class="itemsLeft">
-            <span class="itemsLeft__number"></span> itmes left
+            <span class="itemsLeft__number">0</span> itmes left
           </span>
           <span class="All-Active-Completed pcVersion | fw-700">
             <button>All</button>
@@ -96,14 +104,14 @@
       <!-- End main -->
       <!-- Start footer -->
       <footer class="footer">
-        <section class="ToDoList__management-bar .phoneVersion | ToDoList__task task-container ">
-          <span class="All-Active-Completed">
+        <section  class="phoneVersion ToDoList__management-bar  | ToDoList__task task-container | flex-justify-content-center ">
+          <span class="All-Active-Completed | fw-700">
             <button>All</button>
             <button>Active</button>
             <button>Completed</button>
           </span>
         </section>
-        <span>Drag and drop to reorder list</span>
+        <span class="drag-drop-remarque">Drag and drop to reorder list</span>
       </footer>
       <!-- End footer -->
     </div>

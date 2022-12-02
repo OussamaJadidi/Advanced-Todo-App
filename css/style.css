@@ -5,7 +5,7 @@
     --LT-lightGraishBlue: hsl(233, 11%, 84%);
     --LT-darkGraishBlue: hsl(236, 9%, 61%);
     --LT-veryDarkGraishBlue: hsl(235, 19%, 35%);
-
+    --LT-white: white;
     /* Dark Theme colors (DT) */
     --DT-veryDarkBlue: hsl(235, 21%, 11%);
     --DT-vertDarDesaturatedBlue: hsl(235, 24%, 19%);
@@ -38,7 +38,7 @@
 .container{
     max-width: 35rem;
     margin-inline: auto;
-    margin-block: 4rem;
+    margin-top: 4rem;
     padding-inline: 1.5rem;
 }
 
@@ -63,9 +63,12 @@
         box-sizing: border-box;
         font-weight: var(--fw-400);
 
-        background-image: url("../images/bg-desktop-light.jpg");
         background-repeat: no-repeat;
         background-size: 100vw 40vh;
+    }
+    /* background-image: url("../images/bg-desktop-light.jpg"); */
+    body:not(.ToDoList__task){
+        background-color: var(--LT-veryLightGray);
     }
     button{
         background-color: transparent;
@@ -117,7 +120,7 @@
 
 /* Start Template id="ToDoList__task" */
 .ToDoList__task{
-    background-color: var(--LT-veryLightGray);
+    background-color: var(--LT-white);
     height: 3rem;
     max-width: 100%;
 }
@@ -126,9 +129,13 @@
     min-height: 100%;
     padding-inline: 1.4rem;
 }
-:not(.ToDoList__management-bar).task-container{
-    border-bottom: 1px solid var(--LT-lightGraishBlue);
+.createNewTask .task-container{
+    border: none;
 }
+:where(:not(.ToDoList__management-bar).task-container){
+    border-bottom: 1px solid var(--LT-lightGraishBlue);
+} 
+
 .ToDoList__task__check{ 
     display: inline-block;
     width: 1.25rem;
@@ -136,7 +143,7 @@
     border-radius: 999999px;
     border: 1px solid gray;
     margin-right: 1.4rem;
-    background-color: white;
+    background-color: var(--LT-White);
 }
 :not(.notActive).ToDoList__task__check:active{
     border: 1px solid transparent;
@@ -156,12 +163,18 @@
 .ToDoList__task__text{
     color: var(--LT-veryDarkGraishBlue);
     cursor: pointer;
+    font-size: 1em;
 }
 
 .ToDoList__task__deleteButton{
+    display: none;
     width: .8rem;
     height: .8rem;
 }
+.task-container:hover .ToDoList__task__deleteButton{
+    display: inline-flex;
+}
+
 .ToDoList__management-bar{
     font-size: .75em;
 }
@@ -194,13 +207,25 @@
 .footer{
     text-align: center;
     font-size: .75em;
-    color: var(--DT-lightGrayishBlue);
-    padding-block: 2.5rem;
+    color: gray;
+    padding-block: 1rem;
+    
+}
+
+.ToDoList__management-bar.phoneVersion{
+    font-size: 1em;
+    border-radius: .4rem;
+    box-shadow: 0 0 1rem .2rem rgba(0,0,0,.1);
 }
 @media(min-width: 40em){
     .ToDoList__management-bar.phoneVersion{
         display: none;
     }
+}
+.drag-drop-remarque{
+    display: block;
+    padding-top: 1rem;
+    
 }
 /* End footer */
 /* End block  */
