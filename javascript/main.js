@@ -2,6 +2,7 @@
     let mode ="light"
     let media= window.matchMedia("(max-width: 40em)");
 
+    // changing the backgroundImage src depend on screen width 
     if(media.matches){
         if(mode=="light"){
             console.log("kbir")
@@ -15,6 +16,19 @@
         }else{
             document.body.style.backgroundImage="url('./images/bg-desktop-dark.jpg')"
         }
+    }
+    // some changes for phone users
+    if(media.matches){
+        // decrease the width of the backgroundImage height
+        let header = document.querySelector(".header");
+        header.style.minHeight="15vh";
+        document.body.style.backgroundSize="100vw 30vh";
+        
+        // display the remove__task button for phones devices
+        let deleteTaskButton = [...document.querySelectorAll(".ToDoList__task__deleteButton")];
+        // deleteTaskButton.style.display= "inline-flex";
+        // console.log(deleteTaskButton)
+        deleteTaskButton
     }
 // End changing backgroundImage depend on reponsivity
 // Start light / dark mode chnages
@@ -59,6 +73,75 @@
         }
     })
 // End light / dark mode chnages
-    
-    
-    
+// Start add task button 
+let form = document.querySelector(".createNewTask")
+let newTask= document.querySelector(".createNewTask__text");
+let ToDoList__managementBar = document.querySelector(".ToDoList__management-bar")
+let newTask_template = document.querySelector("#ToDoList__task")
+function addNewTask(){
+    let newTask_template_content= newTask_template.content.cloneNode(true);
+    newTask_template_content.querySelector(".ToDoList__task__text").textContent=newTask.value;
+    ToDoList__managementBar.before(newTask_template_content)
+    newTask.value=""
+}
+form.addEventListener("submit",e=>{
+    e.preventDefault();
+    addNewTask()
+    updateItemsLeftNumber()
+})
+// End add task button 
+// start remove task button
+let removeTask = [...document.querySelectorAll(".ToDoList__task__deleteButton")];
+removeTask.forEach(deleteButton =>{
+    deleteButton.addEventListener("click",function(){
+        this.parentNode.parentNode.remove();
+        updateItemsLeftNumber()
+    })
+})
+// End remove task button
+
+// Start number of items left
+function updateItemsLeftNumber(){
+    let itemsLeftNumberAndOne = [...document.querySelectorAll(".ToDoList__task__check:not(.ToDoList__task__check--clicked)")]
+    let itemsLeftNumber = itemsLeftNumberAndOne.length - 1;
+    console.log(itemsLeftNumberAndOne.length)
+    let itemsLeftDiv = document.querySelector(".itemsLeft__number");
+    itemsLeftDiv.textContent=itemsLeftNumber;
+}
+updateItemsLeftNumber()
+// End number of items left
+
+// Start completed tasks
+// ToDoList__task__check--clicked;
+
+function selectCompleted(){
+    let ToDoList__tasks__check = [...document.querySelectorAll(".ToDoList__task__check")];
+    ToDoList__tasks__check.forEach(ToDoList__task__check =>{
+        ToDoList__task__check.addEventListener("click",function(){
+            this.classList.toggle("ToDoList__task__check--clicked")
+            updateItemsLeftNumber()
+        })
+    })
+}
+selectCompleted();
+// let childrenOfMain =[...document.querySelector(".main").children];
+// childrenOfMain.forEach(child =>{
+//     child.addEventListener("remove",function(){
+//         console.log("change")
+//         selectCompleted()
+//     })
+// })
+document.querySelector(".main").onchange= function(){
+    console.log("ee")
+}
+// End completed tasks
+
+// Start clear completed
+    let clearCompleted = document.querySelector(".clearCompleted");
+    clearCompleted.addEventListener("click",function(){
+        let completedtasks = [...document.querySelectorAll(".ToDoList__task__check--clicked")];
+        completedtasks.forEach(completedtask =>{
+            completedtask.parentElement.parentElement.parentElement.remove();
+        })
+    })
+// End clear completed

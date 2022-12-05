@@ -106,7 +106,9 @@
         align-items: center;
     }
     .createNewTask__addTask{
-        padding-right: 1rem
+        margin-right: .5rem;
+        padding-inline: .5rem;
+        padding-block: .5rem;
     }
     input::placeholder{
         color: var(--LT-darkGraishBlue)
@@ -123,11 +125,12 @@
 /* Start Template id="ToDoList__task" */
 .ToDoList__task{
     background-color: var(--LT-white);
-    height: 3rem;
+    height: 100%;
     max-width: 100%;
 }
 .task-container{
     max-width: 100%;
+    padding-block: 1rem;
     min-height: 100%;
     padding-inline: 1.4rem;
 }
@@ -140,8 +143,8 @@
 
 .ToDoList__task__check{ 
     display: inline-block;
-    width: 1.25rem;
-    height: 1.25rem;
+    min-width: 1.25rem;
+    aspect-ratio: 1;    
     border-radius: 999999px;
     border: 1px solid gray;
     margin-right: 1.4rem;
