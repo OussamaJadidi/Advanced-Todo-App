@@ -29,8 +29,8 @@
         // console.log(deleteTaskButton)
         deleteTaskButton
     }
-    // End changing backgroundImage depend on reponsivity
-    // Start light / dark mode chnages
+// End changing backgroundImage depend on reponsivity
+// Start light / dark mode chnages
     let send_picture = document.querySelector(".fa-paper-plane")
     let light_dark_modeButton =document.querySelector(".header__light-dark-modeButton");
     let light_dark_modeButton__img =document.querySelector(".header__light-dark-modeButton img");
@@ -128,6 +128,7 @@
         addNewTask()
         removeTask()
         updateItemsLeftNumber()
+        dragAndDrop()
     })
 // End add task button 
 // start remove task button
@@ -233,7 +234,8 @@
 
             let ToDoList__management_bar__buttons = [...document.querySelectorAll(".ToDoList__management-bar__buttons")]
             ToDoList__management_bar__buttons.forEach(ToDoList__management_bar__button =>{
-                ToDoList__management_bar__button.style.color="var(--LT-darkGraishBlue)"
+                ToDoList__management_bar__button.style.color="var(--LT-darkGraishBlue)";
+
             })
             all_button.style.color="var(--c-brightBlue)";  
         })
@@ -241,38 +243,40 @@
 // End show all 
 
 // start drag and drop script
-let draggables = [...document.querySelectorAll(".ToDoList__task")];
-draggables.forEach(draggable => {
-    draggable.addEventListener("dragstart",function(){
-        draggable.classList.add("draggable")
+function dragAndDrop(){
+    let draggables = [...document.querySelectorAll(".ToDoList__task")];
+    draggables.forEach(draggable => {
+        draggable.addEventListener("dragstart",function(){
+            draggable.classList.add("draggable")
+        })
+        draggable.addEventListener("dragend",function(){
+            draggable.classList.remove("draggable")
+        })
     })
-    draggable.addEventListener("dragend",function(){
-        draggable.classList.remove("draggable")
-    })
-})
-let container = document.querySelector(".main");
-let draggableElement= document.querySelector(".draggable")
-container.addEventListener("dragover",e => {
-    e.preventDefault();
-    let cursorY = e.clientY;
-    if(afterElement(cursorY)===undefined){
-        document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
-    }else{
-        console.log(afterElement(cursorY))
-        afterElement(cursorY).before(document.querySelector(".draggable"))
-    }
-})
-function afterElement(cursorY){
-    let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
-    let result = containerItems.reduce((nearest,item)=>{
-        let containerItemBox = item.getBoundingClientRect();
-        let  distanceBetweenBoxAndCurosr = containerItemBox.top + (containerItemBox.height / 2) - cursorY;
-        if(nearest.offset > distanceBetweenBoxAndCurosr && distanceBetweenBoxAndCurosr > 0){
-            return {offset: distanceBetweenBoxAndCurosr,item: item}
+    let container = document.querySelector(".main");
+    let draggableElement= document.querySelector(".draggable")
+    container.addEventListener("dragover",e => {
+        e.preventDefault();
+        let cursorY = e.clientY;
+        if(afterElement(cursorY)===undefined){
+            document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
         }else{
-            return nearest
+            afterElement(cursorY).before(document.querySelector(".draggable"))
         }
-    },{offset: 9999999999999999999999})
-    return result.item;
+    })
+    function afterElement(cursorY){
+        let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
+        let result = containerItems.reduce((nearest,item)=>{
+            let containerItemBox = item.getBoundingClientRect();
+            let  distanceBetweenBoxAndCurosr = containerItemBox.top + (containerItemBox.height / 2) - cursorY;
+            if(nearest.offset > distanceBetweenBoxAndCurosr && distanceBetweenBoxAndCurosr > 0){
+                return {offset: distanceBetweenBoxAndCurosr,item: item}
+            }else{
+                return nearest
+            }
+        },{offset: 9999999999999999999999})
+        return result.item;
+    }
 }
+dragAndDrop();
 // End drag and drop script 
