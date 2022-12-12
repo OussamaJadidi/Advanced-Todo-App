@@ -33,6 +33,9 @@
 .fw-700{
     font-weight: var(--fw-700);
 }
+.draggable{
+    opacity: .4;
+}
 /* End utility  classes*/
 /* Start compositions */
 .container{

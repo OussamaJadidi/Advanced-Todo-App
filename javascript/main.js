@@ -91,6 +91,7 @@
     function addNewTask(){
         let section = document.createElement("section");
         section.classList.add("ToDoList__task");
+        section.setAttribute("draggable","true")
         let div = document.createElement("div");
         div.classList.add("task-container","flex-space-between");
         section.appendChild(div);
@@ -229,7 +230,7 @@
             ToDoList__task__check_list.forEach(ToDoList__task__check => {
                 ToDoList__task__check.parentElement.parentElement.parentElement.style.display="block";
             })
-            
+
             let ToDoList__management_bar__buttons = [...document.querySelectorAll(".ToDoList__management-bar__buttons")]
             ToDoList__management_bar__buttons.forEach(ToDoList__management_bar__button =>{
                 ToDoList__management_bar__button.style.color="var(--LT-darkGraishBlue)"
@@ -238,3 +239,40 @@
         })
     })
 // End show all 
+
+// start drag and drop script
+let draggables = [...document.querySelectorAll(".ToDoList__task")];
+draggables.forEach(draggable => {
+    draggable.addEventListener("dragstart",function(){
+        draggable.classList.add("draggable")
+    })
+    draggable.addEventListener("dragend",function(){
+        draggable.classList.remove("draggable")
+    })
+})
+let container = document.querySelector(".main");
+let draggableElement= document.querySelector(".draggable")
+container.addEventListener("dragover",e => {
+    e.preventDefault();
+    let cursorY = e.clientY;
+    if(afterElement(cursorY)===undefined){
+        document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
+    }else{
+        console.log(afterElement(cursorY))
+        afterElement(cursorY).before(document.querySelector(".draggable"))
+    }
+})
+function afterElement(cursorY){
+    let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
+    let result = containerItems.reduce((nearest,item)=>{
+        let containerItemBox = item.getBoundingClientRect();
+        let  distanceBetweenBoxAndCurosr = containerItemBox.top + (containerItemBox.height / 2) - cursorY;
+        if(nearest.offset > distanceBetweenBoxAndCurosr && distanceBetweenBoxAndCurosr > 0){
+            return {offset: distanceBetweenBoxAndCurosr,item: item}
+        }else{
+            return nearest
+        }
+    },{offset: 9999999999999999999999})
+    return result.item;
+}
+// End drag and drop script 
