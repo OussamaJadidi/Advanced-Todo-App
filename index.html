@@ -32,7 +32,7 @@
         <form class="createNewTask ToDoList__task flex-space-between">
           <div class="task-container ">
               <span class="ToDoList__task__check notActive" style=""></span>
-              <input class="createNewTask__text" type="text" placeholder="Create a new todo...">  
+              <input class="createNewTask__text" type="text" placeholder="Create a new todo..." autofocus>  
           </div>
           <div>
             <button class="createNewTask__addTask">
@@ -84,23 +84,15 @@
               </span>
               <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
-        </section><section class="ToDoList__task" style="display: none;">
-          <div class="task-container | flex-space-between">
-              <span class="ToDoList__task__check-text | flex-space-between">
-                <button class="ToDoList__task__check "></button>
-                <span class="ToDoList__task__text">A Todo list task to finish</span> 
-              </span>
-              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
-            </div>
-        </section> 
+        </section>
         <section class="ToDoList__management-bar | ToDoList__task task-container | flex-space-between">
           <span class="itemsLeft">
             <span class="itemsLeft__number">0</span> itmes left
           </span>
           <span class="All-Active-Completed pcVersion | fw-700">
-            <button>All</button>
-            <button>Active</button>
-            <button>Completed</button>
+            <button class="all-button | ToDoList__management-bar__buttons">All</button>
+            <button class="active-button | ToDoList__management-bar__buttons">Active</button>
+            <button class="completed-button | ToDoList__management-bar__buttons">Completed</button>
           </span>
           <button class="clearCompleted">
             Clear Completed
@@ -112,9 +104,9 @@
       <footer class="footer">
         <section  class="phoneVersion ToDoList__management-bar  | ToDoList__task task-container | flex-justify-content-center ">
           <span class="All-Active-Completed | fw-700">
-            <button>All</button>
-            <button>Active</button>
-            <button>Completed</button>
+            <button class="all-button | ToDoList__management-bar__buttons">All</button>
+            <button class="active-button | ToDoList__management-bar__buttons">Active</button>
+            <button class="completed-button | ToDoList__management-bar__buttons">Completed</button>
           </span>
         </section>
         <span class="drag-drop-remarque">Drag and drop to reorder list</span>
