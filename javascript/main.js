@@ -30,7 +30,7 @@
         deleteTaskButton
     }
 // End changing backgroundImage depend on reponsivity
-// Start light / dark mode chnages
+// Start light/dark mode chnanes
     let send_picture = document.querySelector(".fa-paper-plane")
     let light_dark_modeButton =document.querySelector(".header__light-dark-modeButton");
     let light_dark_modeButton__img =document.querySelector(".header__light-dark-modeButton img");
@@ -42,10 +42,10 @@
     getComputedStyle(document.documentElement).getPropertyValue("--LT-darkGraishBlue","var(--DT-veryDarkGrayishBlue)"),
     getComputedStyle(document.documentElement).getPropertyValue("--LT-veryDarkGraishBlue","var(--DT-lightGrayishBlue)")]
     
-    light_dark_modeButton.addEventListener("click",function(){
-        mode=="light"?mode="dark":mode="light";
-        if(mode=="dark"){
-            send_picture.style.color="white";
+    function darkModeTheme(){
+        send_picture.style.color="white";
+
+            localStorage.mode= "dark"
 
             light_dark_modeButton__img.setAttribute("src","./images/icon-sun.svg");
             if(media.matches){
@@ -59,9 +59,11 @@
             root.style.setProperty("--LT-lightGraishBlue","var(--DT-veryDarkGrayishBlue)");
             root.style.setProperty("--LT-darkGraishBlue","var(--DT-veryDarkGrayishBlue)");
             root.style.setProperty("--LT-veryDarkGraishBlue","var(--DT-lightGrayishBlue)");
-            
-        }else{
-            send_picture.style.color="black";
+    }
+    function lightModeTheme(){
+        send_picture.style.color="black";
+
+            localStorage.mode= "light"
 
             light_dark_modeButton__img.setAttribute("src","./images/icon-moon.svg");
             if(media.matches){
@@ -74,40 +76,49 @@
             root.style.setProperty("--LT-lightGraishBlue",LT_lightGraishBlue);
             root.style.setProperty("--LT-darkGraishBlue",LT_darkGraishBlue);
             root.style.setProperty("--LT-veryDarkGraishBlue",LT_veryDarkGraishBlue);
+    }
+    light_dark_modeButton.addEventListener("click",function(){
+        mode=="light"?mode="dark":mode="light";
+        if(mode=="dark"){
+            darkModeTheme()
+        }else{
+            lightModeTheme()
         }
     })
 // End light / dark mode chnages
-// Start add task button 
+// Start "add task" button 
     let form = document.querySelector(".createNewTask")
     let newTask= document.querySelector(".createNewTask__text");
     let ToDoList__managementBar = document.querySelector(".ToDoList__management-bar")
-    // let newTask_template = document.querySelector("#ToDoList__task")
-    // function addNewTask(){
-    //     let newTask_template_content= newTask_template.content.cloneNode(true);
-    //     newTask_template_content.querySelector(".ToDoList__task__text").textContent=newTask.value;
-    //     ToDoList__managementBar.before(newTask_template_content)
-    //     newTask.value=""
-    // }
-    function addNewTask(){
+    
+    function addNewTask(completed,textContent){
         let section = document.createElement("section");
+        let div = document.createElement("div");
+        let span = document.createElement("span");
+        let ToDoList__task__check__button = document.createElement("button");
+        let ToDoList__task__text__span = document.createElement("span");
+        let ToDoList__task__deleteButton__button = document.createElement("button");
+        let img = document.createElement("img");
+        
         section.classList.add("ToDoList__task");
         section.setAttribute("draggable","true")
-        let div = document.createElement("div");
+
         div.classList.add("task-container","flex-space-between");
         section.appendChild(div);
-        let span = document.createElement("span");
+
         span.classList.add("ToDoList__task__check-text","flex-space-between");
         div.appendChild(span);
-        let ToDoList__task__check__button = document.createElement("button");
+        
         ToDoList__task__check__button.classList.add("ToDoList__task__check");
+        if(completed)ToDoList__task__check__button.classList.add("ToDoList__task__check--clicked");
         span.appendChild(ToDoList__task__check__button);
-        let ToDoList__task__text__span = document.createElement("span");
+        
         ToDoList__task__text__span.classList.add("ToDoList__task__text");
         span.appendChild(ToDoList__task__text__span);
-        let ToDoList__task__deleteButton__button = document.createElement("button");
+        
         ToDoList__task__deleteButton__button.classList.add("ToDoList__task__deleteButton");
         span.after(ToDoList__task__deleteButton__button);
-        let img = document.createElement("img");
+        
         img.setAttribute("src","./images/icon-cross.svg");
         img.setAttribute("alt","close button");
         ToDoList__task__deleteButton__button.appendChild(img)
@@ -117,19 +128,30 @@
             this.classList.toggle("ToDoList__task__check--clicked")
             this.parentElement.querySelector(".ToDoList__task__text").classList.toggle("completed")
             updateItemsLeftNumber()
+            taksListStorage()
         })
-
-        section.querySelector(".ToDoList__task__text").textContent=newTask.value;
-        ToDoList__managementBar.before(section)
-        newTask.value=""
+        let check = textContent || ""
+        if(textContent){
+            section.querySelector(".ToDoList__task__text").textContent=textContent;
+            ToDoList__managementBar.before(section)
+        }else{
+            section.querySelector(".ToDoList__task__text").textContent=newTask.value;
+            ToDoList__managementBar.before(section)
+            newTask.value="";
+        }
     }
-    form.addEventListener("submit",e=>{
-        e.preventDefault();
-        addNewTask()
-        removeTask()
-        updateItemsLeftNumber()
-        dragAndDrop()
-    })
+    
+        form.addEventListener("submit",e=>{
+            e.preventDefault();
+            if(newTask.value!==""){
+                addNewTask(false)
+                removeTask()
+                updateItemsLeftNumber()
+                dragAndDrop()
+                taksListStorage()
+            }
+        })
+        addNewTask(true)
 // End add task button 
 // start remove task button
     function removeTask(){
@@ -138,10 +160,11 @@
             deleteButton.addEventListener("click",function(){
                 this.parentNode.parentNode.remove();
                 updateItemsLeftNumber()
+                taksListStorage()
             })
         })
     }
-    removeTask()
+    setTimeout(removeTask,0)
 // End remove task button
 
 // Start number of items left
@@ -157,12 +180,13 @@
 // Start completed tasks
     // ToDoList__task__check--clicked;
     function selectCompleted(){
-        let ToDoList__tasks__check = [...document.querySelectorAll(".ToDoList__task__check")];
+        let ToDoList__tasks__check = [...document.querySelectorAll(".ToDoList__task__check:not(.notActive)")];
         ToDoList__tasks__check.forEach(ToDoList__task__check =>{
             ToDoList__task__check.addEventListener("click",function(){
                 this.classList.toggle("ToDoList__task__check--clicked")
                 this.parentElement.querySelector(".ToDoList__task__text").classList.toggle("completed")
                 updateItemsLeftNumber()
+                taksListStorage()
             })
         })
     }
@@ -176,6 +200,7 @@
         completedtasks.forEach(completedtask =>{
             completedtask.parentElement.parentElement.parentElement.remove();
         })
+        taksListStorage()
     })
 // End clear completed
 
@@ -201,45 +226,40 @@
     })
 // End show only completed
 
-// Start show only active
-    let active_buttons = [...document.querySelectorAll(".active-button")];
-    active_buttons.forEach(active_button =>{
-        active_button.addEventListener("click",function(){
+// Start show all/active/completed tasks function
+function allActiveCompleted(buttonmanagementClass,activeTasksDisplay,completedTasksDisplay){
+    let allActiveCompleted_buttons = [...document.querySelectorAll(buttonmanagementClass)];
+    allActiveCompleted_buttons.forEach(allActiveCompleted_button =>{
+        allActiveCompleted_button.addEventListener("click",function(){
             let ToDoList__task__check_list = [...document.querySelectorAll(".main .ToDoList__task__check")];
             ToDoList__task__check_list.forEach(ToDoList__task__check => {
-                ToDoList__task__check.parentElement.parentElement.parentElement.style.display="block";
+                ToDoList__task__check.parentElement.parentElement.parentElement.style.display=activeTasksDisplay;
             })
             let ToDoList__task__check__clicked_list = [...document.querySelectorAll(".main .ToDoList__task__check--clicked")];
             ToDoList__task__check__clicked_list.forEach(ToDoList__task__check__clicked=>{
-                ToDoList__task__check__clicked.parentElement.parentElement.parentElement.style.display="none";
+                ToDoList__task__check__clicked.parentElement.parentElement.parentElement.style.display=completedTasksDisplay;
             })
 
             let ToDoList__management_bar__buttons = [...document.querySelectorAll(".ToDoList__management-bar__buttons")]
             ToDoList__management_bar__buttons.forEach(ToDoList__management_bar__button =>{
                 ToDoList__management_bar__button.style.color="var(--LT-darkGraishBlue)"
             })
-            active_button.style.color="var(--c-brightBlue)";  
+            allActiveCompleted_button.style.color="var(--c-brightBlue)";  
         })
     })
+}
+// End show all/active/completed tasks funciton
+
+// Start show only completed 
+    allActiveCompleted(".completed","none","block");
+// End show only completed 
+
+// Start show only active
+    allActiveCompleted(".active-button","block","none");
 // End show only active
 
 // Start show all 
-    let all_buttons = [...document.querySelectorAll(".all-button")];
-    all_buttons.forEach(all_button =>{
-        all_button.addEventListener("click",function(){
-            let ToDoList__task__check_list = [...document.querySelectorAll(".main .ToDoList__task__check")];
-            ToDoList__task__check_list.forEach(ToDoList__task__check => {
-                ToDoList__task__check.parentElement.parentElement.parentElement.style.display="block";
-            })
-
-            let ToDoList__management_bar__buttons = [...document.querySelectorAll(".ToDoList__management-bar__buttons")]
-            ToDoList__management_bar__buttons.forEach(ToDoList__management_bar__button =>{
-                ToDoList__management_bar__button.style.color="var(--LT-darkGraishBlue)";
-
-            })
-            all_button.style.color="var(--c-brightBlue)";  
-        })
-    })
+    allActiveCompleted(".all-button","block","block");
 // End show all 
 
 // start drag and drop script
@@ -263,6 +283,7 @@ function dragAndDrop(){
         }else{
             afterElement(cursorY).before(document.querySelector(".draggable"))
         }
+        taksListStorage()
     })
     function afterElement(cursorY){
         let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
@@ -277,6 +298,41 @@ function dragAndDrop(){
         },{offset: 9999999999999999999999})
         return result.item;
     }
+    taksListStorage()
 }
-dragAndDrop();
+setTimeout(dragAndDrop,0)
 // End drag and drop script 
+
+// Start local storage script
+// light/dark mode local Storage
+if(localStorage.mode){
+    mode = localStorage.mode;
+    mode=="light"?lightModeTheme():darkModeTheme();
+}
+// End local storage script 
+// start tasks local Storage
+function taksListStorage(){
+    let container = [...document.querySelectorAll(".main > *:not(:last-child)")]
+    let tasks ={}
+    for(let i=0;i<container.length;i++){
+        let completed=container[i].querySelector(".ToDoList__task__check--clicked")?true:false;
+        let text= container[i].querySelector(".ToDoList__task__text").textContent;
+        tasks[i]=[completed,text]
+    }
+    localStorage.tasksList = JSON.stringify(tasks)
+}
+
+if(localStorage.tasksList){
+    let mainContent = [...document.querySelectorAll(".main > *:not(:last-child)")]
+    mainContent.forEach(contentItem =>{
+        contentItem.remove();
+    })
+    console.log("1")
+    let result= JSON.parse(localStorage.tasksList)
+    for (let i=0;i< Object.keys(result).length;i++){
+        addNewTask(result[i][0],result[i][1])
+        console.log("2")
+    }
+    console.log("3")
+}
+// End tasks local Storage
