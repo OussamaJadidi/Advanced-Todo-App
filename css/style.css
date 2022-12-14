@@ -182,7 +182,11 @@
 .task-container:hover .ToDoList__task__deleteButton{
     display: inline-flex;
 }
-
+@media(hover: none){
+    .ToDoList__task__deleteButton{
+        display: inline-flex;
+    }
+}
 .ToDoList__management-bar{
     font-size: .75em;
 }

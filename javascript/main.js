@@ -263,40 +263,95 @@ function allActiveCompleted(buttonmanagementClass,activeTasksDisplay,completedTa
 // End show all 
 
 // start drag and drop script
+
 function dragAndDrop(){
-    let draggables = [...document.querySelectorAll(".ToDoList__task")];
-    draggables.forEach(draggable => {
-        draggable.addEventListener("dragstart",function(){
-            draggable.classList.add("draggable")
+    function isTouchEnabled() {
+        return ( 'ontouchstart' in window ) ||
+               ( navigator.maxTouchPoints > 0 ) ||
+               ( navigator.msMaxTouchPoints > 0 );
+    }
+    if(isTouchEnabled()){
+        let draggables = [...document.querySelectorAll(".main > *:not(:last-child)")];
+        draggables.forEach(draggable => {
+            draggable.addEventListener("touchstart",function(){
+                draggable.classList.add("draggable")
+            })
+            draggable.addEventListener("touchend",function(){
+                draggable.classList.remove("draggable")
+            })
         })
-        draggable.addEventListener("dragend",function(){
-            draggable.classList.remove("draggable")
+        let containerItems = [...document.querySelectorAll(".main > *:not(:last-child)")];
+        // container.addEventListener("dragover",e => {
+        //     e.preventDefault();
+        //     let cursorY = e.clientY;
+        //     if(afterElement(cursorY)===undefined){
+        //         document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
+        //     }else{
+        //         afterElement(cursorY).before(document.querySelector(".draggable"))
+        //     }
+        //     taksListStorage()
+        // })
+// console.log("touchable")
+        containerItems.forEach(containerItem =>{
+            containerItem.addEventListener("touchenter",function(e){
+                // // console.log(e.clientY)
+                e.preventDefault()
+                console.log("dd");
+                containerItem.style.border="2px solid red"
+                
+            })
         })
-    })
-    let container = document.querySelector(".main");
-    let draggableElement= document.querySelector(".draggable")
-    container.addEventListener("dragover",e => {
-        e.preventDefault();
-        let cursorY = e.clientY;
-        if(afterElement(cursorY)===undefined){
-            document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
-        }else{
-            afterElement(cursorY).before(document.querySelector(".draggable"))
+        function afterElement(cursorY){
+            let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
+            let result = containerItems.reduce((nearest,item)=>{
+                let containerItemBox = item.getBoundingClientRect();
+                let  distanceBetweenBoxAndCurosr = containerItemBox.top + (containerItemBox.height / 2) - cursorY;
+                if(nearest.offset > distanceBetweenBoxAndCurosr && distanceBetweenBoxAndCurosr > 0){
+                    return {offset: distanceBetweenBoxAndCurosr,item: item}
+                }else{
+                    return nearest
+                }
+            },{offset: 9999999999999999999999})
+            return result.item;
         }
-        taksListStorage()
-    })
-    function afterElement(cursorY){
-        let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
-        let result = containerItems.reduce((nearest,item)=>{
-            let containerItemBox = item.getBoundingClientRect();
-            let  distanceBetweenBoxAndCurosr = containerItemBox.top + (containerItemBox.height / 2) - cursorY;
-            if(nearest.offset > distanceBetweenBoxAndCurosr && distanceBetweenBoxAndCurosr > 0){
-                return {offset: distanceBetweenBoxAndCurosr,item: item}
+    }else{
+        let draggables = [...document.querySelectorAll(".main > *:not(:last-child)")];
+        draggables.forEach(draggable => {
+            draggable.addEventListener("dragstart",function(){
+                draggable.classList.add("draggable")
+                console.log("srart")
+            })
+            draggable.addEventListener("dragend",function(){
+                draggable.classList.remove("draggable")
+                console.log("end")
+            })
+        })
+        let container = document.querySelector(".main");
+        // let draggableElement= 33
+        container.addEventListener("dragover",e => {
+            if(!container.querySelector(".draggable"))return/* So that this function run only when we drag some todolist_task (neasted in the main block) not something else*/
+            e.preventDefault();
+            let cursorY = e.clientY;
+            if(afterElement(cursorY)===undefined){
+                document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
             }else{
-                return nearest
+                afterElement(cursorY).before(document.querySelector(".draggable"))
             }
-        },{offset: 9999999999999999999999})
-        return result.item;
+            taksListStorage()
+        })
+        function afterElement(cursorY){
+            let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
+            let result = containerItems.reduce((nearest,item)=>{
+                let containerItemBox = item.getBoundingClientRect();
+                let  distanceBetweenBoxAndCurosr = containerItemBox.top + (containerItemBox.height / 2) - cursorY;
+                if(nearest.offset > distanceBetweenBoxAndCurosr && distanceBetweenBoxAndCurosr > 0){
+                    return {offset: distanceBetweenBoxAndCurosr,item: item}
+                }else{
+                    return nearest
+                }
+            },{offset: 9999999999999999999999})
+            return result.item;
+        }
     }
     taksListStorage()
 }
