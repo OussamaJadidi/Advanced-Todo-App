@@ -179,14 +179,17 @@
     width: .8rem;
     height: .8rem;
 }
-.task-container:hover .ToDoList__task__deleteButton{
-    display: inline-flex;
-}
-@media(hover: none){
-    .ToDoList__task__deleteButton{
+@media(hover: hover){
+    .task-container:hover .ToDoList__task__deleteButton{
         display: inline-flex;
     }
 }
+@media(hover: none){
+    .task-container:hover .ToDoList__task__deleteButton{
+        display: inline-flex;
+    }
+}
+
 .ToDoList__management-bar{
     font-size: .75em;
 }

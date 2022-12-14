@@ -151,7 +151,6 @@
                 taksListStorage()
             }
         })
-        addNewTask(true)
 // End add task button 
 // start remove task button
     function removeTask(){
@@ -261,9 +260,19 @@ function allActiveCompleted(buttonmanagementClass,activeTasksDisplay,completedTa
 // Start show all 
     allActiveCompleted(".all-button","block","block");
 // End show all 
-
+// let hada = document.querySelector(".main :first-child");
+// console.log("hada")
+// console.log(hada)
+// hada.style.border="5px solid red";
+// function x(){
+//     console.log(hada)
+//     document.querySelector(".main :first-child").addEventListener("touchmove",function(){
+//         document.querySelector(".main :first-child").style.border="5px solid green";
+//         console.log("it works youpiii");
+//     })
+// }
+// setTimeout(x,0)
 // start drag and drop script
-
 function dragAndDrop(){
     function isTouchEnabled() {
         return ( 'ontouchstart' in window ) ||
@@ -272,35 +281,41 @@ function dragAndDrop(){
     }
     if(isTouchEnabled()){
         let draggables = [...document.querySelectorAll(".main > *:not(:last-child)")];
-        draggables.forEach(draggable => {
-            draggable.addEventListener("touchstart",function(){
-                draggable.classList.add("draggable")
-            })
-            draggable.addEventListener("touchend",function(){
-                draggable.classList.remove("draggable")
-            })
-        })
         let containerItems = [...document.querySelectorAll(".main > *:not(:last-child)")];
-        // container.addEventListener("dragover",e => {
-        //     e.preventDefault();
-        //     let cursorY = e.clientY;
-        //     if(afterElement(cursorY)===undefined){
-        //         document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
-        //     }else{
-        //         afterElement(cursorY).before(document.querySelector(".draggable"))
-        //     }
-        //     taksListStorage()
-        // })
-// console.log("touchable")
-        containerItems.forEach(containerItem =>{
-            containerItem.addEventListener("touchenter",function(e){
-                // // console.log(e.clientY)
-                e.preventDefault()
-                console.log("dd");
-                containerItem.style.border="2px solid red"
-                
+        draggables.forEach(draggable => {
+            let touchHold;
+            draggable.addEventListener("touchstart",function(e){
+                touchHold="true"
+                draggable.addEventListener("touchend",function(){
+                    touchHold= false;
+                    draggable.classList.remove("draggable");
+                    containerItems.forEach(containerItem =>{
+                        containerItem.removeEventListener("touchmove",rankOnTheList)
+                    })
+                })
+                function rankOnTheList(e){
+                     e.preventDefault()
+              
+                         let cursorY = e.targetTouches[0].clientY;
+                         if(afterElement(cursorY)===undefined){
+                             document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
+                         }else{
+                             afterElement(cursorY).before(document.querySelector(".draggable"))
+                         }
+                         taksListStorage()
+                }
+                setTimeout(function(){
+                    if(touchHold!==false){
+                        draggable.classList.add("draggable")
+                        containerItems.forEach(containerItem =>{
+                            containerItem.addEventListener("touchmove",rankOnTheList)
+                        })
+                    }
+                },1000)
             })
         })
+      
+        
         function afterElement(cursorY){
             let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
             let result = containerItems.reduce((nearest,item)=>{
@@ -319,11 +334,9 @@ function dragAndDrop(){
         draggables.forEach(draggable => {
             draggable.addEventListener("dragstart",function(){
                 draggable.classList.add("draggable")
-                console.log("srart")
             })
             draggable.addEventListener("dragend",function(){
                 draggable.classList.remove("draggable")
-                console.log("end")
             })
         })
         let container = document.querySelector(".main");
@@ -382,12 +395,9 @@ if(localStorage.tasksList){
     mainContent.forEach(contentItem =>{
         contentItem.remove();
     })
-    console.log("1")
     let result= JSON.parse(localStorage.tasksList)
     for (let i=0;i< Object.keys(result).length;i++){
         addNewTask(result[i][0],result[i][1])
-        console.log("2")
     }
-    console.log("3")
 }
 // End tasks local Storage
