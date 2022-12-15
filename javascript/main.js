@@ -18,16 +18,10 @@
     }
     // some changes for phone users
     if(media.matches){
-        // decrease the width of the backgroundImage height
+        // decrease the height of the "header & backgroundImage" for phone users
         let header = document.querySelector(".header");
         header.style.minHeight="15vh";
         document.body.style.backgroundSize="100vw 30vh";
-        
-        // display the remove__task button for phones devices
-        let deleteTaskButton = [...document.querySelectorAll(".ToDoList__task__deleteButton")];
-        // deleteTaskButton.style.display= "inline-flex";
-        // console.log(deleteTaskButton)
-        deleteTaskButton
     }
 // End changing backgroundImage depend on reponsivity
 // Start light/dark mode chnanes
@@ -106,8 +100,9 @@
         div.classList.add("task-container","flex-space-between");
         section.appendChild(div);
 
-        span.classList.add("ToDoList__task__check-text","flex-space-between");
         div.appendChild(span);
+        span.classList.add("|","flex-space-between");
+        span.classList.add("ToDoList__task__check-text")
         
         ToDoList__task__check__button.classList.add("ToDoList__task__check");
         if(completed)ToDoList__task__check__button.classList.add("ToDoList__task__check--clicked");
@@ -203,28 +198,6 @@
     })
 // End clear completed
 
-// Start show only completed
-    let completed_buttons = [...document.querySelectorAll(".completed-button")];
-    completed_buttons.forEach(completed_button =>{
-        completed_button.addEventListener("click",function(){
-            let ToDoList__task__check_list = [...document.querySelectorAll(".main .ToDoList__task__check")];
-            ToDoList__task__check_list.forEach(ToDoList__task__check => {
-                ToDoList__task__check.parentElement.parentElement.parentElement.style.display="none";
-            })
-            let ToDoList__task__check__clicked_list = [...document.querySelectorAll(".main .ToDoList__task__check--clicked")];
-            ToDoList__task__check__clicked_list.forEach(ToDoList__task__check__clicked=>{
-                ToDoList__task__check__clicked.parentElement.parentElement.parentElement.style.display="block";
-            })
-
-            let ToDoList__management_bar__buttons = [...document.querySelectorAll(".ToDoList__management-bar__buttons")]
-            ToDoList__management_bar__buttons.forEach(ToDoList__management_bar__button =>{
-                ToDoList__management_bar__button.style.color="var(--LT-darkGraishBlue)"
-            })
-            completed_button.style.color="var(--c-brightBlue)";  
-        })
-    })
-// End show only completed
-
 // Start show all/active/completed tasks function
 function allActiveCompleted(buttonmanagementClass,activeTasksDisplay,completedTasksDisplay){
     let allActiveCompleted_buttons = [...document.querySelectorAll(buttonmanagementClass)];
@@ -250,7 +223,7 @@ function allActiveCompleted(buttonmanagementClass,activeTasksDisplay,completedTa
 // End show all/active/completed tasks funciton
 
 // Start show only completed 
-    allActiveCompleted(".completed","none","block");
+    allActiveCompleted(".completed-button","none","block");
 // End show only completed 
 
 // Start show only active
@@ -260,25 +233,9 @@ function allActiveCompleted(buttonmanagementClass,activeTasksDisplay,completedTa
 // Start show all 
     allActiveCompleted(".all-button","block","block");
 // End show all 
-// let hada = document.querySelector(".main :first-child");
-// console.log("hada")
-// console.log(hada)
-// hada.style.border="5px solid red";
-// function x(){
-//     console.log(hada)
-//     document.querySelector(".main :first-child").addEventListener("touchmove",function(){
-//         document.querySelector(".main :first-child").style.border="5px solid green";
-//         console.log("it works youpiii");
-//     })
-// }
-// setTimeout(x,0)
+
 // start drag and drop script
 function dragAndDrop(){
-    function isTouchEnabled() {
-        return ( 'ontouchstart' in window ) ||
-               ( navigator.maxTouchPoints > 0 ) ||
-               ( navigator.msMaxTouchPoints > 0 );
-    }
     if(isTouchEnabled()){
         let draggables = [...document.querySelectorAll(".main > *:not(:last-child)")];
         let containerItems = [...document.querySelectorAll(".main > *:not(:last-child)")];
@@ -294,15 +251,14 @@ function dragAndDrop(){
                     })
                 })
                 function rankOnTheList(e){
-                     e.preventDefault()
-              
-                         let cursorY = e.targetTouches[0].clientY;
-                         if(afterElement(cursorY)===undefined){
-                             document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
-                         }else{
-                             afterElement(cursorY).before(document.querySelector(".draggable"))
-                         }
-                         taksListStorage()
+                    e.preventDefault()
+                    let cursorY = e.targetTouches[0].clientY;
+                    if(afterElement(cursorY)===undefined){
+                        document.querySelector(".main > *:last-child").before(document.querySelector(".draggable"));
+                    }else{
+                        afterElement(cursorY).before(document.querySelector(".draggable"))
+                    }
+                    taksListStorage()
                 }
                 setTimeout(function(){
                     if(touchHold!==false){
@@ -314,22 +270,9 @@ function dragAndDrop(){
                 },1000)
             })
         })
-      
-        
-        function afterElement(cursorY){
-            let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
-            let result = containerItems.reduce((nearest,item)=>{
-                let containerItemBox = item.getBoundingClientRect();
-                let  distanceBetweenBoxAndCurosr = containerItemBox.top + (containerItemBox.height / 2) - cursorY;
-                if(nearest.offset > distanceBetweenBoxAndCurosr && distanceBetweenBoxAndCurosr > 0){
-                    return {offset: distanceBetweenBoxAndCurosr,item: item}
-                }else{
-                    return nearest
-                }
-            },{offset: 9999999999999999999999})
-            return result.item;
-        }
+
     }else{
+
         let draggables = [...document.querySelectorAll(".main > *:not(:last-child)")];
         draggables.forEach(draggable => {
             draggable.addEventListener("dragstart",function(){
@@ -340,7 +283,6 @@ function dragAndDrop(){
             })
         })
         let container = document.querySelector(".main");
-        // let draggableElement= 33
         container.addEventListener("dragover",e => {
             if(!container.querySelector(".draggable"))return/* So that this function run only when we drag some todolist_task (neasted in the main block) not something else*/
             e.preventDefault();
@@ -366,7 +308,27 @@ function dragAndDrop(){
             return result.item;
         }
     }
-    taksListStorage()
+
+    // function to return the element that will drop before it the element draggable
+    function afterElement(cursorY){
+        let containerItems = [...document.querySelectorAll(".main > :not(:last-child):not(.draggable)")];
+        let result = containerItems.reduce((nearest,item)=>{
+            let containerItemBox = item.getBoundingClientRect();
+            let  distanceBetweenBoxAndCurosr = containerItemBox.top + (containerItemBox.height / 2) - cursorY;
+            if(nearest.offset > distanceBetweenBoxAndCurosr && distanceBetweenBoxAndCurosr > 0){
+                return {offset: distanceBetweenBoxAndCurosr,item: item}
+            }else{
+                return nearest
+            }
+        },{offset: 9999999999999999999999})
+        return result.item;
+    }
+    // function to test if the screen touchable or not
+    function isTouchEnabled() {
+        return ( 'ontouchstart' in window ) ||
+               ( navigator.maxTouchPoints > 0 ) ||
+               ( navigator.msMaxTouchPoints > 0 );
+    }
 }
 setTimeout(dragAndDrop,0)
 // End drag and drop script 

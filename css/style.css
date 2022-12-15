@@ -132,6 +132,7 @@
     max-width: 100%;
 }
 .task-container{
+    width: 100%;
     max-width: 100%;
     padding-block: 1rem;
     min-height: 100%;
@@ -168,10 +169,12 @@
     background-position: 60% 50%;
     background-repeat: no-repeat;
 }
+
 .ToDoList__task__text{
     color: var(--LT-veryDarkGraishBlue);
     cursor: pointer;
     font-size: 1em;
+ 
 }
 
 .ToDoList__task__deleteButton{
@@ -179,6 +182,7 @@
     width: .8rem;
     height: .8rem;
 }
+
 @media(hover: hover){
     .task-container:hover .ToDoList__task__deleteButton{
         display: inline-flex;
@@ -241,11 +245,7 @@
         display: none;
     }
 }
-.drag-drop-remarque{
-    display: block;
-    padding-top: 1rem;
-    
-}
+
 /* End footer */
 /* End block  */
 
