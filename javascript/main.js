@@ -80,7 +80,8 @@
         }
     })
 // End light / dark mode chnages
-// Start "add task" button 
+// Start "add task" button                 
+//  remarque="it was easier to use template.content.cloneNode instead of creating custom js DOM but i wanna change the way this time"
     let form = document.querySelector(".createNewTask")
     let newTask= document.querySelector(".createNewTask__text");
     let ToDoList__managementBar = document.querySelector(".ToDoList__management-bar")
@@ -96,10 +97,10 @@
         
         section.classList.add("ToDoList__task");
         section.setAttribute("draggable","true")
-
+        
         div.classList.add("task-container","flex-space-between");
         section.appendChild(div);
-
+        
         div.appendChild(span);
         span.classList.add("|","flex-space-between");
         span.classList.add("ToDoList__task__check-text")
@@ -117,18 +118,19 @@
         img.setAttribute("src","./images/icon-cross.svg");
         img.setAttribute("alt","close button");
         ToDoList__task__deleteButton__button.appendChild(img)
-
-
+       
         ToDoList__task__check__button.addEventListener("click",function(){
             this.classList.toggle("ToDoList__task__check--clicked")
             this.parentElement.querySelector(".ToDoList__task__text").classList.toggle("completed")
             updateItemsLeftNumber()
             taksListStorage()
         })
+
         let check = textContent || ""
+    
         if(textContent){
             section.querySelector(".ToDoList__task__text").textContent=textContent;
-            ToDoList__managementBar.before(section)
+            ToDoList__managementBar.before(section)          
         }else{
             section.querySelector(".ToDoList__task__text").textContent=newTask.value;
             ToDoList__managementBar.before(section)
@@ -136,8 +138,8 @@
         }
     }
     
-        form.addEventListener("submit",e=>{
-            e.preventDefault();
+    form.addEventListener("submit",e=>{
+        e.preventDefault();
             if(newTask.value!==""){
                 addNewTask(false)
                 removeTask()
@@ -168,7 +170,7 @@
         let itemsLeftDiv = document.querySelector(".itemsLeft__number");
         itemsLeftDiv.textContent=itemsLeftNumber;
     }
-    updateItemsLeftNumber()
+    setTimeout(updateItemsLeftNumber,0)
 // End number of items left
 
 // Start completed tasks
@@ -363,3 +365,41 @@ if(localStorage.tasksList){
     }
 }
 // End tasks local Storage
+
+// start on click the x button to exit the page
+
+// function saveOrDeleteData(){
+//     Swal.fire({
+//         title: 'Do you want to save the changes?',
+//         showDenyButton: true,
+//         showCancelButton: true,
+//         confirmButtonText: 'Save',
+//         denyButtonText: `Don't save`,
+//       }).then((result) => {
+//         /* Read more about isConfirmed, isDenied below */
+//         if (result.isConfirmed) {
+//           Swal.fire('Saved!', '', 'success')
+//         } else if (result.isDenied) {
+//           Swal.fire('Changes are not saved', '', 'info')
+//         }
+//       })
+// }
+
+// window.onbeforeunload = function() {
+//     saveOrDeleteData()
+//     return "d"
+// }
+// function myfun(){
+//     // Write your business logic here
+//     alert ("do you wanna save your changes or not bro")
+//     console.log('hello');
+// }
+// window.onbeforeunload = function(){
+//     return "Your Data will be saved";
+//   };
+// window.onbeforeunload = function () {
+//     return 'please save your setting before leaving the page';
+// }
+
+// End on click the x button to exit the page
+// delete localStorage.tasksList

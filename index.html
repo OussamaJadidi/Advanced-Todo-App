@@ -18,6 +18,8 @@
     <!-- JavaScript links  -->
     <script src="https://kit.fontawesome.com/c6da55cc0b.js" crossorigin="anonymous"></script>
     <script src="./javascript/main.js" defer></script>
+        <!-- third party "alert of save or delete data before exit the page" -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   </head>
   <body>
@@ -47,16 +49,8 @@
         <section class="ToDoList__task" draggable="true">
           <div class="task-container | flex-space-between">
               <span class="ToDoList__task__check-text | flex-space-between">
-                <button class="ToDoList__task__check "></button>
-                <span class="ToDoList__task__text">A Todo list task to finish</span> 
-              </span>
-              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
-            </div>
-        </section><section class="ToDoList__task" draggable="true">
-          <div class="task-container | flex-space-between">
-              <span class="ToDoList__task__check-text | flex-space-between">
-                <button class="ToDoList__task__check "></button>
-                <span class="ToDoList__task__text">A Todo list task to finish</span> 
+                <button class="ToDoList__task__check"></button>
+                <span class="ToDoList__task__text">Welcome to ToDoList App</span> 
               </span>
               <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
@@ -64,27 +58,29 @@
           <div class="task-container | flex-space-between">
               <span class="ToDoList__task__check-text | flex-space-between">
                 <button class="ToDoList__task__check ToDoList__task__check--clicked"></button>
-                <span class="ToDoList__task__text">A Todo list task to finish</span> 
+                <span class="ToDoList__task__text completed">Write your TodoList tasks and acheive them</span> 
               </span>
               <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
         </section><section class="ToDoList__task" draggable="true">
           <div class="task-container | flex-space-between">
               <span class="ToDoList__task__check-text | flex-space-between">
-                <button class="ToDoList__task__check "></button>
-                <span class="ToDoList__task__text">A Todo list task to finishA TodoAA Todo list task to finishA TodoAA Todo list task to finishA TodoAA Todo list task to finishA TodoAA Todo list task to finishA TodoAA Todo list task to finishA TodoAA Todo list task to finishA TodoA Todo list task to finishA TodoA Todo list task to finishA Todo</span> 
+                <button class="ToDoList__task__check"></button>
+                <span class="ToDoList__task__text">Drag and drop your tasks to rank them depend on priority</span> 
               </span>
               <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
         </section><section class="ToDoList__task" draggable="true">
           <div class="task-container | flex-space-between">
               <span class="ToDoList__task__check-text | flex-space-between">
-                <button class="ToDoList__task__check "></button>
-                <span class="ToDoList__task__text">A Todo list task to finish</span> 
+                <button class="ToDoList__task__check"></button>
+                <span class="ToDoList__task__text">Open and close the webApp without worrying about loosing your data</span> 
               </span>
               <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
             </div>
         </section>
+
+
         <section class="pcVersion ToDoList__management-bar | ToDoList__task task-container | flex-space-between">
           <span class="itemsLeft">
             <span class="itemsLeft__number">0</span> itmes left
@@ -116,15 +112,15 @@
     <!-- End container -->
     <!-- Start template of ToDoList's tasks -->
     <template id="ToDoList__task"><!-- i found using template easier than appending DOMs in that project -->
-      <section class="ToDoList__task">
-        <div class="task-container | flex-space-between">
-            <span class="ToDoList__task__check-text | flex-space-between">
-              <button class="ToDoList__task__check "></button>
-              <span class="ToDoList__task__text"></span> 
-            </span>
-            <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
-          </div>
-      </section>
+        <section class="ToDoList__task" draggable="true">
+          <div class="task-container | flex-space-between">
+              <span class="ToDoList__task__check-text | flex-space-between">
+                <button class="ToDoList__task__check "></button>
+                <span class="ToDoList__task__text"></span> 
+              </span>
+              <button class="ToDoList__task__deleteButton"><img src="./images/icon-cross.svg" alt="close button" ></button>
+            </div>
+        </section>
     </template>
     <!-- End template of ToDoList's tasks -->
   </body>

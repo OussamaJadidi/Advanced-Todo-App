@@ -251,3 +251,15 @@
 
 /* Start Todo list task  */
 /* End Todo list task  */
+
+.ToDoList__task__check-text{
+    width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
+}
+
+.ToDoList__task__text{
+    white-space: normal; 
+    word-wrap: break-word;
+    width:calc(100% - 42px);
+    max-width: calc(100% - 42px);
+}
