@@ -106,7 +106,10 @@
         span.classList.add("ToDoList__task__check-text")
         
         ToDoList__task__check__button.classList.add("ToDoList__task__check");
-        if(completed)ToDoList__task__check__button.classList.add("ToDoList__task__check--clicked");
+        if(completed){
+            ToDoList__task__check__button.classList.add("ToDoList__task__check--clicked");
+            ToDoList__task__text__span.classList.add("completed")
+        }
         span.appendChild(ToDoList__task__check__button);
         
         ToDoList__task__text__span.classList.add("ToDoList__task__text");
